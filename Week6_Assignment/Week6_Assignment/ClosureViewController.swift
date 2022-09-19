@@ -27,6 +27,9 @@ class ClosureViewController: UIViewController {
         showAlert2(title: "배경색 변경", message: "배경색을 바꾸시겠습니까?", okTitle: "바꾸기") {
             self.view.backgroundColor = .gray
         }
+        showAlert2(title: <#T##String#>, message: <#T##String?#>, okTitle: <#T##String#>) { 
+            <#code#>
+        }
         
     }
 }
@@ -60,6 +63,9 @@ extension UIViewController {
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         let ok = UIAlertAction(title: okTitle, style: .default) { action in //액션정보 전달
             okAction()
+            let nn = UIAlertAction(title: "", style: .default) { <#UIAlertAction#> in
+                <#code#>
+            }
         }
         alert.addAction(cancel)
         alert.addAction(ok)
