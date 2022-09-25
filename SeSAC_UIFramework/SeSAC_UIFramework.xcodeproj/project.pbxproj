@@ -12,6 +12,9 @@
 		98CC9CE228DF44C2007B91FF /* SeSAC_UIFrameworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CC9CE128DF44C2007B91FF /* SeSAC_UIFrameworkTests.swift */; };
 		98CC9CE328DF44C2007B91FF /* SeSAC_UIFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 98CC9CD528DF44C1007B91FF /* SeSAC_UIFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		98CC9CED28DF44EA007B91FF /* SeSACAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CC9CEC28DF44EA007B91FF /* SeSACAlert.swift */; };
+		98FF1EE428E02B0B00E5A7C9 /* SeSACReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FF1EE328E02B0B00E5A7C9 /* SeSACReusableProtocol.swift */; };
+		98FF1EE628E02C5900E5A7C9 /* SeSACActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FF1EE528E02C5900E5A7C9 /* SeSACActivityController.swift */; };
+		98FF1EE828E02DB100E5A7C9 /* SeSACWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FF1EE728E02DB100E5A7C9 /* SeSACWebView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +34,9 @@
 		98CC9CDC28DF44C2007B91FF /* SeSAC_UIFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SeSAC_UIFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98CC9CE128DF44C2007B91FF /* SeSAC_UIFrameworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSAC_UIFrameworkTests.swift; sourceTree = "<group>"; };
 		98CC9CEC28DF44EA007B91FF /* SeSACAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAlert.swift; sourceTree = "<group>"; };
+		98FF1EE328E02B0B00E5A7C9 /* SeSACReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACReusableProtocol.swift; sourceTree = "<group>"; };
+		98FF1EE528E02C5900E5A7C9 /* SeSACActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACActivityController.swift; sourceTree = "<group>"; };
+		98FF1EE728E02DB100E5A7C9 /* SeSACWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACWebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +82,9 @@
 				98CC9CD528DF44C1007B91FF /* SeSAC_UIFramework.h */,
 				98CC9CD628DF44C1007B91FF /* SeSAC_UIFramework.docc */,
 				98CC9CEC28DF44EA007B91FF /* SeSACAlert.swift */,
+				98FF1EE328E02B0B00E5A7C9 /* SeSACReusableProtocol.swift */,
+				98FF1EE528E02C5900E5A7C9 /* SeSACActivityController.swift */,
+				98FF1EE728E02DB100E5A7C9 /* SeSACWebView.swift */,
 			);
 			path = SeSAC_UIFramework;
 			sourceTree = "<group>";
@@ -197,8 +206,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98FF1EE628E02C5900E5A7C9 /* SeSACActivityController.swift in Sources */,
 				98CC9CED28DF44EA007B91FF /* SeSACAlert.swift in Sources */,
 				98CC9CD728DF44C1007B91FF /* SeSAC_UIFramework.docc in Sources */,
+				98FF1EE828E02DB100E5A7C9 /* SeSACWebView.swift in Sources */,
+				98FF1EE428E02B0B00E5A7C9 /* SeSACReusableProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

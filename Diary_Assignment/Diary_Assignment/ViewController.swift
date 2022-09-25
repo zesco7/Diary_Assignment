@@ -23,12 +23,17 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         
         testOpen()
-        //testPrivate()
-        showSeSACAlert(title: "테스트얼럿", message: "테스트메시지", buttonTitle: "변경") { _ in
-            self.view.backgroundColor = .lightGray
-        }
+//        showSeSACAlert(title: "테스트얼럿", message: "테스트메시지", buttonTitle: "변경") { _ in
+//            self.view.backgroundColor = .lightGray
+//        }
+        
+        let image = UIImage(systemName: "star.fill")!
+        let shareURL = "https://www.apple.com"
+        let text = "WWDC What's New!!!"
+        //sesacActivityViewController(shareImage: image, shareURL: shareURL, shareText: text)
+        
+        //let web = OpenWebView() // open인데도 왜 접근이 안되는지?
+        OpenWebView.presentWebViewController(self, url: "https://www.apple.com", transitionStyle: .present)
     }
-
-
 }
 
