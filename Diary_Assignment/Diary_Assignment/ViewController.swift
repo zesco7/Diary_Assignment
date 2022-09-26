@@ -22,6 +22,10 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        let vc = KakaoCodeBaseViewController()
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true)
+        
         testOpen()
 //        showSeSACAlert(title: "테스트얼럿", message: "테스트메시지", buttonTitle: "변경") { _ in
 //            self.view.backgroundColor = .lightGray

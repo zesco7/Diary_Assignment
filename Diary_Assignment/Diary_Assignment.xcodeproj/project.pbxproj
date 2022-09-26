@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		988FD62B28E15510008760A7 /* CodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988FD62A28E15510008760A7 /* CodeViewController.swift */; };
+		988FD62E28E17BDB008760A7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 988FD62D28E17BDB008760A7 /* SnapKit */; };
+		988FD63028E17C30008760A7 /* CodeSnapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988FD62F28E17C30008760A7 /* CodeSnapViewController.swift */; };
+		988FD63228E18895008760A7 /* CodeSnap2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988FD63128E18895008760A7 /* CodeSnap2ViewController.swift */; };
+		988FD63428E1A70F008760A7 /* KakaoCodeBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988FD63328E1A70F008760A7 /* KakaoCodeBaseViewController.swift */; };
 		98CC9CB528DF44A3007B91FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CC9CB428DF44A3007B91FF /* AppDelegate.swift */; };
 		98CC9CB728DF44A3007B91FF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CC9CB628DF44A3007B91FF /* SceneDelegate.swift */; };
 		98CC9CB928DF44A3007B91FF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CC9CB828DF44A3007B91FF /* ViewController.swift */; };
@@ -54,6 +59,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		988FD62A28E15510008760A7 /* CodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeViewController.swift; sourceTree = "<group>"; };
+		988FD62F28E17C30008760A7 /* CodeSnapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSnapViewController.swift; sourceTree = "<group>"; };
+		988FD63128E18895008760A7 /* CodeSnap2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSnap2ViewController.swift; sourceTree = "<group>"; };
+		988FD63328E1A70F008760A7 /* KakaoCodeBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoCodeBaseViewController.swift; sourceTree = "<group>"; };
 		98CC9CB128DF44A3007B91FF /* Diary_Assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary_Assignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98CC9CB428DF44A3007B91FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98CC9CB628DF44A3007B91FF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,12 +85,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				98FF1EF228E031CA00E5A7C9 /* SeSAC_UIFramework.framework in Frameworks */,
+				988FD62E28E17BDB008760A7 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		988FD62728E15489008760A7 /* CodeBase */ = {
+			isa = PBXGroup;
+			children = (
+				988FD62A28E15510008760A7 /* CodeViewController.swift */,
+				988FD62F28E17C30008760A7 /* CodeSnapViewController.swift */,
+				988FD63128E18895008760A7 /* CodeSnap2ViewController.swift */,
+				988FD63328E1A70F008760A7 /* KakaoCodeBaseViewController.swift */,
+			);
+			path = CodeBase;
+			sourceTree = "<group>";
+		};
 		98CC9CA828DF44A3007B91FF = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +124,7 @@
 		98CC9CB328DF44A3007B91FF /* Diary_Assignment */ = {
 			isa = PBXGroup;
 			children = (
+				988FD62728E15489008760A7 /* CodeBase */,
 				98FF1EF428E041A000E5A7C9 /* WalkThrough */,
 				98CC9CB428DF44A3007B91FF /* AppDelegate.swift */,
 				98CC9CB628DF44A3007B91FF /* SceneDelegate.swift */,
@@ -160,6 +182,9 @@
 			dependencies = (
 			);
 			name = Diary_Assignment;
+			packageProductDependencies = (
+				988FD62D28E17BDB008760A7 /* SnapKit */,
+			);
 			productName = Diary_Assignment;
 			productReference = 98CC9CB128DF44A3007B91FF /* Diary_Assignment.app */;
 			productType = "com.apple.product-type.application";
@@ -188,6 +213,9 @@
 				Base,
 			);
 			mainGroup = 98CC9CA828DF44A3007B91FF;
+			packageReferences = (
+				988FD62C28E17BDB008760A7 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 98CC9CB228DF44A3007B91FF /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -241,9 +269,13 @@
 			files = (
 				98CC9CB928DF44A3007B91FF /* ViewController.swift in Sources */,
 				98FF1EF828E041ED00E5A7C9 /* FirstViewController.swift in Sources */,
+				988FD63228E18895008760A7 /* CodeSnap2ViewController.swift in Sources */,
 				98CC9CB528DF44A3007B91FF /* AppDelegate.swift in Sources */,
+				988FD63428E1A70F008760A7 /* KakaoCodeBaseViewController.swift in Sources */,
 				98FF1EFA28E041F700E5A7C9 /* SecondViewController.swift in Sources */,
+				988FD63028E17C30008760A7 /* CodeSnapViewController.swift in Sources */,
 				98FF1EFC28E0420100E5A7C9 /* ThirdViewController.swift in Sources */,
+				988FD62B28E15510008760A7 /* CodeViewController.swift in Sources */,
 				98FF1EFE28E0499600E5A7C9 /* WalkThroughViewController.swift in Sources */,
 				98CC9CB728DF44A3007B91FF /* SceneDelegate.swift in Sources */,
 			);
@@ -463,6 +495,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		988FD62C28E17BDB008760A7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		988FD62D28E17BDB008760A7 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 988FD62C28E17BDB008760A7 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 98CC9CA928DF44A3007B91FF /* Project object */;
 }
