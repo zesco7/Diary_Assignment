@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		988D25AE28E2F7AB004046E6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988D25AD28E2F7AB004046E6 /* UIViewController+Extension.swift */; };
+		988D25B028E300A5004046E6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988D25AF28E300A5004046E6 /* ProfileViewController.swift */; };
 		988FD62B28E15510008760A7 /* CodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988FD62A28E15510008760A7 /* CodeViewController.swift */; };
 		988FD62E28E17BDB008760A7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 988FD62D28E17BDB008760A7 /* SnapKit */; };
 		988FD63028E17C30008760A7 /* CodeSnapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988FD62F28E17C30008760A7 /* CodeSnapViewController.swift */; };
@@ -59,6 +61,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		988D25AD28E2F7AB004046E6 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		988D25AF28E300A5004046E6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		988FD62A28E15510008760A7 /* CodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeViewController.swift; sourceTree = "<group>"; };
 		988FD62F28E17C30008760A7 /* CodeSnapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSnapViewController.swift; sourceTree = "<group>"; };
 		988FD63128E18895008760A7 /* CodeSnap2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSnap2ViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +96,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		988D25AA28E2F77B004046E6 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				988D25AD28E2F7AB004046E6 /* UIViewController+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		988FD62728E15489008760A7 /* CodeBase */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,12 +136,14 @@
 		98CC9CB328DF44A3007B91FF /* Diary_Assignment */ = {
 			isa = PBXGroup;
 			children = (
+				988D25AA28E2F77B004046E6 /* Extension */,
 				988FD62728E15489008760A7 /* CodeBase */,
 				98FF1EF428E041A000E5A7C9 /* WalkThrough */,
 				98CC9CB428DF44A3007B91FF /* AppDelegate.swift */,
 				98CC9CB628DF44A3007B91FF /* SceneDelegate.swift */,
-				98CC9CB828DF44A3007B91FF /* ViewController.swift */,
 				98CC9CBA28DF44A3007B91FF /* Main.storyboard */,
+				98CC9CB828DF44A3007B91FF /* ViewController.swift */,
+				988D25AF28E300A5004046E6 /* ProfileViewController.swift */,
 				98CC9CBD28DF44A4007B91FF /* Assets.xcassets */,
 				98CC9CBF28DF44A4007B91FF /* LaunchScreen.storyboard */,
 				98CC9CC228DF44A4007B91FF /* Info.plist */,
@@ -267,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				988D25AE28E2F7AB004046E6 /* UIViewController+Extension.swift in Sources */,
 				98CC9CB928DF44A3007B91FF /* ViewController.swift in Sources */,
 				98FF1EF828E041ED00E5A7C9 /* FirstViewController.swift in Sources */,
 				988FD63228E18895008760A7 /* CodeSnap2ViewController.swift in Sources */,
@@ -276,6 +291,7 @@
 				988FD63028E17C30008760A7 /* CodeSnapViewController.swift in Sources */,
 				98FF1EFC28E0420100E5A7C9 /* ThirdViewController.swift in Sources */,
 				988FD62B28E15510008760A7 /* CodeViewController.swift in Sources */,
+				988D25B028E300A5004046E6 /* ProfileViewController.swift in Sources */,
 				98FF1EFE28E0499600E5A7C9 /* WalkThroughViewController.swift in Sources */,
 				98CC9CB728DF44A3007B91FF /* SceneDelegate.swift in Sources */,
 			);
