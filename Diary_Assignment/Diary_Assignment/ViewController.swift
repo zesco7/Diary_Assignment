@@ -24,16 +24,37 @@ class ViewController: UIViewController {
         
         configure()
         nameButton.addTarget(self, action: #selector(nameButtonClicked), for: .touchUpInside)
+        
+        //값전달 방식2. Notification(ProfileVC->VC): addObserver로 post에서 보내는 데이터를 받기
+        NotificationCenter.default.addObserver(self, selector: #selector(saveButtonClickedNotification(notification:)), name: NSNotification.Name("saveButtonNotification"), object: nil)
     
     }
+    @objc func saveButtonClickedNotification(notification: NSNotification) {
+        if let name = notification.userInfo?["name"] as? String {
+            print(name)
+            self.nameButton.setTitle(name, for: .normal)
+        }
+    }
+    
     
     //ProfileViewController가 스토리보드에 연결된 상태라면(+아웃렛도 있다면) 스토리보드까지 가지고와줘야 화면에 표시할 수 있다. 단순히 뷰컨트롤러만 가져온다고 화면에 보이지 않음
     @objc func nameButtonClicked() {
-        let vc = ProfileViewController()
-        vc.saveButtonActionHandler = { //값전달처럼 saveButtonActionHandler을 ProfileViewController로 넘겨주는 구조
-            self.nameButton.setTitle(vc.nameTextField.text, for: .normal)
-        }
+        //값전달 방식2. Notification(VC->ProfileVC)
+        NotificationCenter.default.post(name: NSNotification.Name("TEST"), object: nil, userInfo: ["name": "\(Int.random(in: 1...100))", "value": 123456])
         
+//        let vc = WriteViewController()
+//        present(vc, animated: true)
+        
+        let vc = ProfileViewController()
+        //값전달 방식1. Closure(saveButtonActionHandler을 ProfileViewController로 넘겨주는 구조)
+//        vc.saveButtonActionHandler = { //매개변수 사용X
+//            self.nameButton.setTitle(vc.nameTextField.text, for: .normal)
+//        }
+        
+        vc.saveButtonActionHandler = { name in //매개변수 사용O
+            self.nameButton.setTitle(name, for: .normal)
+        }
+
         present(vc, animated: true)
     }
     

@@ -14,6 +14,11 @@
 		988FD63028E17C30008760A7 /* CodeSnapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988FD62F28E17C30008760A7 /* CodeSnapViewController.swift */; };
 		988FD63228E18895008760A7 /* CodeSnap2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988FD63128E18895008760A7 /* CodeSnap2ViewController.swift */; };
 		988FD63428E1A70F008760A7 /* KakaoCodeBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988FD63328E1A70F008760A7 /* KakaoCodeBaseViewController.swift */; };
+		98BEF40428E3D8EC00E07B92 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BEF40328E3D8EC00E07B92 /* BaseViewController.swift */; };
+		98BEF40728E3DA5D00E07B92 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BEF40628E3DA5D00E07B92 /* WriteViewController.swift */; };
+		98BEF40928E3DD3900E07B92 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BEF40828E3DD3900E07B92 /* BaseView.swift */; };
+		98BEF40B28E3DEE800E07B92 /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BEF40A28E3DEE800E07B92 /* WriteView.swift */; };
+		98BEF40E28E3F91B00E07B92 /* BlackRadiusTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BEF40D28E3F91B00E07B92 /* BlackRadiusTextField.swift */; };
 		98CC9CB528DF44A3007B91FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CC9CB428DF44A3007B91FF /* AppDelegate.swift */; };
 		98CC9CB728DF44A3007B91FF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CC9CB628DF44A3007B91FF /* SceneDelegate.swift */; };
 		98CC9CB928DF44A3007B91FF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CC9CB828DF44A3007B91FF /* ViewController.swift */; };
@@ -67,6 +72,11 @@
 		988FD62F28E17C30008760A7 /* CodeSnapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSnapViewController.swift; sourceTree = "<group>"; };
 		988FD63128E18895008760A7 /* CodeSnap2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSnap2ViewController.swift; sourceTree = "<group>"; };
 		988FD63328E1A70F008760A7 /* KakaoCodeBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoCodeBaseViewController.swift; sourceTree = "<group>"; };
+		98BEF40328E3D8EC00E07B92 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		98BEF40628E3DA5D00E07B92 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
+		98BEF40828E3DD3900E07B92 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		98BEF40A28E3DEE800E07B92 /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
+		98BEF40D28E3F91B00E07B92 /* BlackRadiusTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackRadiusTextField.swift; sourceTree = "<group>"; };
 		98CC9CB128DF44A3007B91FF /* Diary_Assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary_Assignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98CC9CB428DF44A3007B91FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98CC9CB628DF44A3007B91FF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +125,33 @@
 			path = CodeBase;
 			sourceTree = "<group>";
 		};
+		98BEF40028E3D8D100E07B92 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				98BEF40C28E3F8B700E07B92 /* CustomView */,
+				98BEF40328E3D8EC00E07B92 /* BaseViewController.swift */,
+				98BEF40828E3DD3900E07B92 /* BaseView.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		98BEF40528E3DA3900E07B92 /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				98BEF40628E3DA5D00E07B92 /* WriteViewController.swift */,
+				98BEF40A28E3DEE800E07B92 /* WriteView.swift */,
+			);
+			path = Diary;
+			sourceTree = "<group>";
+		};
+		98BEF40C28E3F8B700E07B92 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				98BEF40D28E3F91B00E07B92 /* BlackRadiusTextField.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		98CC9CA828DF44A3007B91FF = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +173,8 @@
 		98CC9CB328DF44A3007B91FF /* Diary_Assignment */ = {
 			isa = PBXGroup;
 			children = (
+				98BEF40528E3DA3900E07B92 /* Diary */,
+				98BEF40028E3D8D100E07B92 /* Utility */,
 				988D25AA28E2F77B004046E6 /* Extension */,
 				988FD62728E15489008760A7 /* CodeBase */,
 				98FF1EF428E041A000E5A7C9 /* WalkThrough */,
@@ -284,16 +323,21 @@
 				988D25AE28E2F7AB004046E6 /* UIViewController+Extension.swift in Sources */,
 				98CC9CB928DF44A3007B91FF /* ViewController.swift in Sources */,
 				98FF1EF828E041ED00E5A7C9 /* FirstViewController.swift in Sources */,
+				98BEF40728E3DA5D00E07B92 /* WriteViewController.swift in Sources */,
 				988FD63228E18895008760A7 /* CodeSnap2ViewController.swift in Sources */,
 				98CC9CB528DF44A3007B91FF /* AppDelegate.swift in Sources */,
+				98BEF40428E3D8EC00E07B92 /* BaseViewController.swift in Sources */,
 				988FD63428E1A70F008760A7 /* KakaoCodeBaseViewController.swift in Sources */,
 				98FF1EFA28E041F700E5A7C9 /* SecondViewController.swift in Sources */,
+				98BEF40E28E3F91B00E07B92 /* BlackRadiusTextField.swift in Sources */,
 				988FD63028E17C30008760A7 /* CodeSnapViewController.swift in Sources */,
 				98FF1EFC28E0420100E5A7C9 /* ThirdViewController.swift in Sources */,
 				988FD62B28E15510008760A7 /* CodeViewController.swift in Sources */,
 				988D25B028E300A5004046E6 /* ProfileViewController.swift in Sources */,
 				98FF1EFE28E0499600E5A7C9 /* WalkThroughViewController.swift in Sources */,
 				98CC9CB728DF44A3007B91FF /* SceneDelegate.swift in Sources */,
+				98BEF40928E3DD3900E07B92 /* BaseView.swift in Sources */,
+				98BEF40B28E3DEE800E07B92 /* WriteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
