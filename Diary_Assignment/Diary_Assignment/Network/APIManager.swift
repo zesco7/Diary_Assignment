@@ -11,6 +11,7 @@ import SwiftyJSON
 
 class ImageSearchAPIManager {
     static var shared = ImageSearchAPIManager()
+    private init() { } //초기화 방지용 접근제어 선언
     
     func fetchImageData(data: String) {
         let url = "\(EndPoint.naverURL)?query=\(data)"

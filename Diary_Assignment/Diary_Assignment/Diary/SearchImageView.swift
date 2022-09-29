@@ -8,6 +8,9 @@
 import Foundation
 import UIKit
 
+/*컬렉션뷰 포인트
+ -. 컬렉션뷰 생성할때 레이아웃으로 초기화 시켜줘야 함.
+ */
 class SearchImageView: BaseView {
     
     let searchBar: UISearchBar = {
@@ -22,23 +25,17 @@ class SearchImageView: BaseView {
         let width = UIScreen.main.bounds.width - (spacing * 4)
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: width / 3, height: width / 3)
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout) //컬렉션뷰 생성할때 레이아웃으로 초기화 시켜줘야 함.
-        view.backgroundColor = .yellow
         view.collectionViewLayout = layout
         return view
     }()
     
-    let collectionViewCell: UICollectionViewCell = {
-       let view = UICollectionViewCell()
-        view.backgroundColor = .red
-        return view
-    }()
-    
     override func configureUI() {
-        [searchBar, collectionView, collectionViewCell].forEach {
+        [searchBar, collectionView].forEach {
             self.addSubview($0)
         }
     }
