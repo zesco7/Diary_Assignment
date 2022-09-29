@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		984A3EF628E576220072FA8A /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984A3EF528E576220072FA8A /* DiaryViewController.swift */; };
+		984A3EFA28E5762F0072FA8A /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984A3EF928E5762F0072FA8A /* DiaryView.swift */; };
+		984A3EFC28E57E320072FA8A /* SearchImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984A3EFB28E57E320072FA8A /* SearchImageViewController.swift */; };
+		984A3EFE28E57E400072FA8A /* SearchImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984A3EFD28E57E400072FA8A /* SearchImageView.swift */; };
+		984A3F0B28E5A84B0072FA8A /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984A3F0A28E5A84B0072FA8A /* APIManager.swift */; };
+		984A3F0F28E5A9E30072FA8A /* NetworkInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984A3F0E28E5A9E30072FA8A /* NetworkInformation.swift */; };
+		984A3F1228E5AB570072FA8A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 984A3F1128E5AB570072FA8A /* Alamofire */; };
+		984A3F1528E5AB660072FA8A /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 984A3F1428E5AB660072FA8A /* SwiftyJSON */; };
+		984A3F1828E5AB7C0072FA8A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 984A3F1728E5AB7C0072FA8A /* Kingfisher */; };
 		988D25AE28E2F7AB004046E6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988D25AD28E2F7AB004046E6 /* UIViewController+Extension.swift */; };
 		988D25B028E300A5004046E6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988D25AF28E300A5004046E6 /* ProfileViewController.swift */; };
 		988FD62B28E15510008760A7 /* CodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988FD62A28E15510008760A7 /* CodeViewController.swift */; };
@@ -66,6 +75,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		984A3EF528E576220072FA8A /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
+		984A3EF928E5762F0072FA8A /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
+		984A3EFB28E57E320072FA8A /* SearchImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchImageViewController.swift; sourceTree = "<group>"; };
+		984A3EFD28E57E400072FA8A /* SearchImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchImageView.swift; sourceTree = "<group>"; };
+		984A3F0A28E5A84B0072FA8A /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		984A3F0E28E5A9E30072FA8A /* NetworkInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInformation.swift; sourceTree = "<group>"; };
 		988D25AD28E2F7AB004046E6 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		988D25AF28E300A5004046E6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		988FD62A28E15510008760A7 /* CodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeViewController.swift; sourceTree = "<group>"; };
@@ -98,14 +113,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				984A3F1228E5AB570072FA8A /* Alamofire in Frameworks */,
 				98FF1EF228E031CA00E5A7C9 /* SeSAC_UIFramework.framework in Frameworks */,
+				984A3F1528E5AB660072FA8A /* SwiftyJSON in Frameworks */,
 				988FD62E28E17BDB008760A7 /* SnapKit in Frameworks */,
+				984A3F1828E5AB7C0072FA8A /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		984A3F0728E5A82C0072FA8A /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				984A3F0E28E5A9E30072FA8A /* NetworkInformation.swift */,
+				984A3F0A28E5A84B0072FA8A /* APIManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		988D25AA28E2F77B004046E6 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +167,10 @@
 			children = (
 				98BEF40628E3DA5D00E07B92 /* WriteViewController.swift */,
 				98BEF40A28E3DEE800E07B92 /* WriteView.swift */,
+				984A3EF528E576220072FA8A /* DiaryViewController.swift */,
+				984A3EF928E5762F0072FA8A /* DiaryView.swift */,
+				984A3EFB28E57E320072FA8A /* SearchImageViewController.swift */,
+				984A3EFD28E57E400072FA8A /* SearchImageView.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -173,6 +204,7 @@
 		98CC9CB328DF44A3007B91FF /* Diary_Assignment */ = {
 			isa = PBXGroup;
 			children = (
+				984A3F0728E5A82C0072FA8A /* Network */,
 				98BEF40528E3DA3900E07B92 /* Diary */,
 				98BEF40028E3D8D100E07B92 /* Utility */,
 				988D25AA28E2F77B004046E6 /* Extension */,
@@ -237,6 +269,9 @@
 			name = Diary_Assignment;
 			packageProductDependencies = (
 				988FD62D28E17BDB008760A7 /* SnapKit */,
+				984A3F1128E5AB570072FA8A /* Alamofire */,
+				984A3F1428E5AB660072FA8A /* SwiftyJSON */,
+				984A3F1728E5AB7C0072FA8A /* Kingfisher */,
 			);
 			productName = Diary_Assignment;
 			productReference = 98CC9CB128DF44A3007B91FF /* Diary_Assignment.app */;
@@ -268,6 +303,9 @@
 			mainGroup = 98CC9CA828DF44A3007B91FF;
 			packageReferences = (
 				988FD62C28E17BDB008760A7 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				984A3F1028E5AB570072FA8A /* XCRemoteSwiftPackageReference "Alamofire" */,
+				984A3F1328E5AB660072FA8A /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				984A3F1628E5AB7C0072FA8A /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 98CC9CB228DF44A3007B91FF /* Products */;
 			projectDirPath = "";
@@ -320,21 +358,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				984A3F0B28E5A84B0072FA8A /* APIManager.swift in Sources */,
 				988D25AE28E2F7AB004046E6 /* UIViewController+Extension.swift in Sources */,
+				984A3EFC28E57E320072FA8A /* SearchImageViewController.swift in Sources */,
 				98CC9CB928DF44A3007B91FF /* ViewController.swift in Sources */,
+				984A3EF628E576220072FA8A /* DiaryViewController.swift in Sources */,
 				98FF1EF828E041ED00E5A7C9 /* FirstViewController.swift in Sources */,
 				98BEF40728E3DA5D00E07B92 /* WriteViewController.swift in Sources */,
 				988FD63228E18895008760A7 /* CodeSnap2ViewController.swift in Sources */,
 				98CC9CB528DF44A3007B91FF /* AppDelegate.swift in Sources */,
 				98BEF40428E3D8EC00E07B92 /* BaseViewController.swift in Sources */,
 				988FD63428E1A70F008760A7 /* KakaoCodeBaseViewController.swift in Sources */,
+				984A3F0F28E5A9E30072FA8A /* NetworkInformation.swift in Sources */,
 				98FF1EFA28E041F700E5A7C9 /* SecondViewController.swift in Sources */,
+				984A3EFA28E5762F0072FA8A /* DiaryView.swift in Sources */,
 				98BEF40E28E3F91B00E07B92 /* BlackRadiusTextField.swift in Sources */,
 				988FD63028E17C30008760A7 /* CodeSnapViewController.swift in Sources */,
 				98FF1EFC28E0420100E5A7C9 /* ThirdViewController.swift in Sources */,
 				988FD62B28E15510008760A7 /* CodeViewController.swift in Sources */,
 				988D25B028E300A5004046E6 /* ProfileViewController.swift in Sources */,
 				98FF1EFE28E0499600E5A7C9 /* WalkThroughViewController.swift in Sources */,
+				984A3EFE28E57E400072FA8A /* SearchImageView.swift in Sources */,
 				98CC9CB728DF44A3007B91FF /* SceneDelegate.swift in Sources */,
 				98BEF40928E3DD3900E07B92 /* BaseView.swift in Sources */,
 				98BEF40B28E3DEE800E07B92 /* WriteView.swift in Sources */,
@@ -557,6 +601,30 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		984A3F1028E5AB570072FA8A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		984A3F1328E5AB660072FA8A /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		984A3F1628E5AB7C0072FA8A /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		988FD62C28E17BDB008760A7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -568,6 +636,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		984A3F1128E5AB570072FA8A /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 984A3F1028E5AB570072FA8A /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		984A3F1428E5AB660072FA8A /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 984A3F1328E5AB660072FA8A /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		984A3F1728E5AB7C0072FA8A /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 984A3F1628E5AB7C0072FA8A /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		988FD62D28E17BDB008760A7 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 988FD62C28E17BDB008760A7 /* XCRemoteSwiftPackageReference "SnapKit" */;
