@@ -22,4 +22,15 @@ class DiaryViewController: BaseViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(saveRightBarButtonItemClickedNotification(notification:)), name: NSNotification.Name("saveRightBarButtonItemClickedNotification"), object: nil)
+    
+    }
+    
+    @objc func saveRightBarButtonItemClickedNotification() {
+        
+    }
+    
 }
