@@ -6,6 +6,12 @@
 //
 
 import UIKit
+import Kingfisher
+
+/*질문
+ -.NotificationCenter.default.addObserver로 사진URL받아서 네트워크다시요청하는건지 사진자체를 받아오는건지? 사진자체만 받아오려면 어떻게 하는지?
+ 
+ */
 
 class DiaryViewController: BaseViewController {
     
@@ -24,13 +30,14 @@ class DiaryViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(saveRightBarButtonItemClickedNotification(notification:)), name: NSNotification.Name("saveRightBarButtonItemClickedNotification"), object: nil)
-    
+        NotificationCenter.default.addObserver(self, selector: #selector(selectionRightBarButtonItemClickedNotification(notification:)), name: NSNotification.Name("savedImageURL"), object: nil)
     }
     
-    @objc func saveRightBarButtonItemClickedNotification() {
-        
+    @objc func selectionRightBarButtonItemClickedNotification(notification: NSNotification) {
+        if let savedImageURL = notification.userInfo?["savedImageURL"] as? String {
+            print(savedImageURL)
+            let url = URL(string: savedImageURL)
+            self.mainView.photoImageView.kf.setImage(with: url)
+        }
     }
-    
 }

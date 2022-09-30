@@ -21,7 +21,8 @@ import Kingfisher
 
 /*질문
  -.searchBarSearchButtonClicked에서 imageArray.removeAll() 없어도 되지 않나? fetchImage 호출할때 imageArray에 데이터 덮어씌워지니까
- 
+ -. selectionRightBarButtonItemClicked에서 사진선택해야만 선택버튼 작동하도록 조건 어떻게?
+ -. cellForItemAt에서 설정한 태그를 외부에서 어떻게 접근하는지? selectionRightBarButtonItemClicked에서 imageArray 배열값에 태그를 넣을 때 사용하려고함.
  */
 class SearchImageViewController: BaseViewController {
     
@@ -41,12 +42,12 @@ class SearchImageViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "선택", style: .plain, target: nil, action: #selector(saveRightBarButtonItemClicked))
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "선택", style: .plain, target: nil, action: #selector(selectionRightBarButtonItemClicked))
     }
     
-    @objc func saveRightBarButtonItemClicked() {
-        NotificationCenter.default.post(name: .saveButton, object: nil, userInfo: ["name": mainView.searchBar.text!, "value": 123456])
+    @objc func selectionRightBarButtonItemClicked() {
+        NotificationCenter.default.post(name: NSNotification.Name("savedImageURL"), object: nil, userInfo: ["savedImage": imageArray[1]])
+        self.navigationController?.popViewController(animated: true)
     }
     
     func fetchImage(query: String) {
@@ -69,6 +70,7 @@ extension SearchImageViewController: UICollectionViewDelegate, UICollectionViewD
         
         let url = URL(string: imageArray[indexPath.item])
         cell.photoImageView.kf.setImage(with: url)
+        cell.photoImageView.tag = indexPath.item
         return cell
     }
     
@@ -76,6 +78,7 @@ extension SearchImageViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? SearchImageCollectionViewCell {
             cell.showSelectionBox()
+            print(cell.photoImageView.tag)
         }
     }
     
