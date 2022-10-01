@@ -26,3 +26,15 @@ class BaseViewController: UIViewController {
     }
     
 }
+
+extension SearchImageViewController {
+    func hhideKeyboard() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ddismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func ddismissKeyboard() {
+        view.endEditing(true)
+    }
+}

@@ -35,6 +35,8 @@ class DiaryViewController: BaseViewController {
     
     @objc func selectionRightBarButtonItemClickedNotification(notification: NSNotification) {
         if let savedImageURL = notification.userInfo?["savedImageURL"] as? String {
+
+            //self.mainView.photoImageView.image = savedImageURL
             print(savedImageURL)
             let url = URL(string: savedImageURL)
             self.mainView.photoImageView.kf.setImage(with: url)

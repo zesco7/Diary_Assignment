@@ -30,6 +30,8 @@ class SearchImageViewController: BaseViewController {
     var imageArray : [String] = []
     var startPage = 0
     var totalCount = 0
+    var selectedImageIndex : Int?
+    var selettedImage : UIImage?
     
     override func loadView() {
         self.view = mainView
@@ -37,16 +39,19 @@ class SearchImageViewController: BaseViewController {
         mainView.collectionView.dataSource = self
         mainView.collectionView.register(SearchImageCollectionViewCell.self, forCellWithReuseIdentifier: "SearchImageCollectionViewCell")
         mainView.searchBar.delegate = self
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "선택", style: .plain, target: nil, action: #selector(selectionRightBarButtonItemClicked))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "선택", style: .plain, target: self, action: #selector(selectionRightBarButtonItemClicked))
     }
     
     @objc func selectionRightBarButtonItemClicked() {
-        NotificationCenter.default.post(name: NSNotification.Name("savedImageURL"), object: nil, userInfo: ["savedImage": imageArray[1]])
+        print(#function)
+        let vccell = SearchImageCollectionViewCell()
+        
+//        NotificationCenter.default.post(name: NSNotification.Name("savedImage"), object: nil, userInfo: ["savedImage": vc.photoImage.image) //타입캐스팅 어떻게?
+        NotificationCenter.default.post(name: NSNotification.Name("savedImageURL"), object: nil, userInfo: ["savedImageURL": imageArray[selectedImageIndex!]])
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -69,8 +74,8 @@ extension SearchImageViewController: UICollectionViewDelegate, UICollectionViewD
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchImageCollectionViewCell", for: indexPath) as? SearchImageCollectionViewCell else { return UICollectionViewCell() }
         
         let url = URL(string: imageArray[indexPath.item])
-        cell.photoImageView.kf.setImage(with: url)
-        cell.photoImageView.tag = indexPath.item
+        cell.photoImage.kf.setImage(with: url)
+        cell.photoImage.tag = indexPath.item
         return cell
     }
     
@@ -78,7 +83,7 @@ extension SearchImageViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? SearchImageCollectionViewCell {
             cell.showSelectionBox()
-            print(cell.photoImageView.tag)
+            self.selectedImageIndex = indexPath.item //프로퍼티에 인덱스 담아 didSelectItemAt외부에서 사용할수있도록 만듦
         }
     }
     
@@ -109,6 +114,7 @@ extension SearchImageViewController: UISearchBarDelegate {
             //imageArray.removeAll() //fetchImage 호출할때 imageArray에 데이터 덮어씌워지니까 삭제 안해도 되지 않나?
             fetchImage(query: text)
         }
+        searchBar.resignFirstResponder()
     }
     
     //취소버튼 생성

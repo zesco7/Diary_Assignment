@@ -17,7 +17,7 @@ import SnapKit
 class SearchImageCollectionViewCell: UICollectionViewCell {
     static var identifier = "SearchImageCollectionViewCell"
     
-    var photoImageView = UIImageView()
+    var photoImage = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -31,11 +31,11 @@ class SearchImageCollectionViewCell: UICollectionViewCell {
     }
     
     func addSubview() {
-        self.addSubview(photoImageView)
+        self.addSubview(photoImage)
     }
     
     func setConstraint() {
-        photoImageView.snp.makeConstraints { make in
+        photoImage.snp.makeConstraints { make in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
             make.size.equalTo(self)
@@ -47,12 +47,12 @@ class SearchImageCollectionViewCell: UICollectionViewCell {
     }
     
     func showSelectionBox() {
-        photoImageView.layer.borderWidth = 5
-        photoImageView.layer.borderColor = UIColor.black.cgColor
+        photoImage.layer.borderWidth = 5
+        photoImage.layer.borderColor = UIColor.red.cgColor
     }
     
     func hideSelectionBox() {
-        photoImageView.layer.borderWidth = 0
-        photoImageView.layer.borderColor = UIColor.black.cgColor
+        photoImage.layer.borderWidth = 0
+        photoImage.layer.borderColor = UIColor.clear.cgColor
     }
 }
