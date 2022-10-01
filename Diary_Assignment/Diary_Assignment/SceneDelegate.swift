@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let scene = (scene as? UIWindowScene) else { return }
         
-        let vc = DiaryViewController()
+        let vc = HomeViewController()
         let navi = UINavigationController(rootViewController: vc) //DiaryViewController에 네비게이션 컨트롤러 연결
         window = UIWindow(windowScene: scene)
         window?.rootViewController = navi

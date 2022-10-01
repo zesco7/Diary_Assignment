@@ -14,6 +14,7 @@ class BaseViewController: UIViewController {
         
         view.backgroundColor = .white
         configure()
+        hideKeyboard()
     }
     
     func configure() { }
@@ -24,17 +25,15 @@ class BaseViewController: UIViewController {
         alert.addAction(ok)
         present(alert, animated: true)
     }
-    
 }
 
-extension SearchImageViewController {
-    func hhideKeyboard() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(ddismissKeyboard))
-        tap.cancelsTouchesInView = false
+extension BaseViewController {
+    func hideKeyboard() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     
-    @objc func ddismissKeyboard() {
+    @objc func dismissKeyboard() {
         view.endEditing(true)
     }
 }

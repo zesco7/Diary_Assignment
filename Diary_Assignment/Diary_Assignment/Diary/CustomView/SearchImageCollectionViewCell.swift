@@ -14,6 +14,7 @@ import SnapKit
  3.컬렉션뷰셀에 표시할 객체 레이아웃 설정하기(snapkit사용)
  4.공통UI있으면 코드구현해서 적용하기
  */
+
 class SearchImageCollectionViewCell: UICollectionViewCell {
     static var identifier = "SearchImageCollectionViewCell"
     
@@ -30,8 +31,9 @@ class SearchImageCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //뷰계층구조상 UICollectionViewCell에 contentView가 있고 그 위에 객체를 추가하는 것이기 때문에 addSubview가 아닌 contentView.addSubview
     func addSubview() {
-        self.addSubview(photoImage)
+        self.contentView.addSubview(photoImage)
     }
     
     func setConstraint() {

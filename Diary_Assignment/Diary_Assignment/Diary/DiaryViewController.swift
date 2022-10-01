@@ -7,20 +7,26 @@
 
 import UIKit
 import Kingfisher
+import RealmSwift //Realm1. 라이브러리 추가
 
-/*질문
- -.NotificationCenter.default.addObserver로 사진URL받아서 네트워크다시요청하는건지 사진자체를 받아오는건지? 사진자체만 받아오려면 어떻게 하는지?
- 
+/*Realm데이터 저장 순서
+ 1. 라이브러리 추가
+ 2. 파일 저장경로 설정
+ 3. 레코드 생성, 추가
+ 4. 파일 저장경로 확인
  */
 
 class DiaryViewController: BaseViewController {
     
     let mainView = DiaryView()
-    //let navi = UINavigationController(rootViewController: DiaryViewController())
+    
+    //Realm2. 파일 저장경로 설정
+    let localRealm = try! Realm() //realm테이블에 내용 CRUD할때 Realm테이블에 접근하도록 만들기(localRealm은 테이블경로)
     
     override func loadView() {
         self.view = mainView
         mainView.searchImageButton.addTarget(self, action: #selector(searchImageButtonClicked), for: .touchUpInside)
+        mainView.sampleButton.addTarget(self, action: #selector(sampleButtonClicked), for: .touchUpInside)
     }
     
     @objc func searchImageButtonClicked() {
@@ -28,9 +34,25 @@ class DiaryViewController: BaseViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    //Realm3. 레코드 생성, 추가
+    @objc func sampleButtonClicked() {
+        //레코드 생성
+        let task = UserDiary(diaryTitle: "오늘의 일기\(Int.random(in: 1...100))", diaryContents: "일기 테스트 내용", diaryDate: Date(), regDate: Date(), favorite: false, photo: nil)
+        
+        //레코드 추가
+        try! localRealm.write {
+            localRealm.add(task)
+            print("Realm Success")
+            dismiss(animated: true)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(selectionRightBarButtonItemClickedNotification(notification:)), name: NSNotification.Name("savedImageURL"), object: nil)
+        
+        //Realm4. 파일 저장경로 출력(원래 샌드박스처럼 파일저장경로를 알 수는 없지만 Realm에서 코드 제공)
+        print("Realm is located at:", localRealm.configuration.fileURL!)
     }
     
     @objc func selectionRightBarButtonItemClickedNotification(notification: NSNotification) {
