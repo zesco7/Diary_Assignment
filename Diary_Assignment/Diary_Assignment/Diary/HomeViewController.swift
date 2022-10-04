@@ -44,6 +44,7 @@ class HomeViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        //UITableViewCell.self의미: UITableViewCell가 가지고 있는 전체 값을 갖게된다.
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
@@ -70,8 +71,7 @@ class HomeViewController: UIViewController {
     //네비게이션 컨트롤러의 동작할때 pop을 하면 스택에서 빠져나간 뷰 컨트롤러는 메모리에서 사라지기 때문에 화면전환시 viewDidLoad가 호출되지 않으므로 viewWillAppear에서 reloadData해줘야함
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //Realm4. Realm데이터 정렬하여 tasks에 담기
-        tasks = localRealm.objects(UserDiary.self).sorted(byKeyPath: "diaryDate", ascending: true)
+        fetchRealm()
         
         print(#function) //구현이 안됐을땐 콘솔에서 코드가 실행되는지 안되는지 먼저 꼭 살피자.
         //tableView.reloadData() //Realm5. 데이터갱신하여 화면표시
@@ -83,6 +83,11 @@ class HomeViewController: UIViewController {
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         //self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func fetchRealm() {
+        //Realm4. Realm데이터 정렬하여 tasks에 담기
+        tasks = localRealm.objects(UserDiary.self).sorted(byKeyPath: "diaryDate", ascending: true)
     }
 }
 
@@ -96,4 +101,51 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = tasks[indexPath.row].diaryTitle
         return cell
     }
+    
+    //반환값 작성형식 모를때는 우선 반환값 적어보자
+    //UIContextualAction: 테이블셀 사용자가 스와이프할때 보여지는 액션
+    //테이블뷰 높이에 따라서 제목설정해도 안보일 수 있음.
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let favorite = UIContextualAction(style: .normal, title: "즐겨찾기") { action, view, completionHandler in
+            
+            //Realm데이터 기준으로 즐겨찾기 이미지 업데이트(방식1이 상대적으로 효율적임. 데이터 한개바꼈는데 전체 데이터 가지고올 필요 없음)
+            //방식1. 스와이프로 변경된 셀데이터만 reload, 방식2. 데이터가 변경됐으므로 다시 realm에서 데이터 가지고오기(didSet사용)
+            try! self.localRealm.write {
+                //하나의 레코드에서 특정컬럼 하나만 변경
+                self.tasks[indexPath.row].favorite = !self.tasks[indexPath.row].favorite
+                
+                //하나의 레코드에서 컬럼 전체 변경
+                //self.tasks.setValue(false, forKey: "favorite")
+                
+                //하나의 레코드에서 여러 컬럼 변경(변경하려는 컬럼 전에 구분용으로 pk를 넣어주어야 함)
+                self.localRealm.create(UserDiary.self, value: ["objectId": self.tasks[indexPath.row].objectId, "diaryContent": "변경테스트", "diaryTitle": "제목임"], update: .modified)
+                
+                print("Realm Update Succeeded")
+            }
+            //self.fetchRealm() //방식1.
+            print(self.tasks[indexPath.row].favorite)
+        }
+        
+        
+        let image = tasks[indexPath.row].favorite ? "star.fill" : "star"
+        favorite.image = UIImage(systemName: image) //이미지,배경변경 하려면 프로퍼티접근해서 변경
+        favorite.backgroundColor = .systemBlue
+        
+        return UISwipeActionsConfiguration(actions: [favorite])
+    }
+    
+    //trailing은 오른쪽부터 표시됨.
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let favorite = UIContextualAction(style: .normal, title: "즐겨찾기") { action, view, completionHandler in
+            print("favorite Button Clicked")
+        }
+
+        let example = UIContextualAction(style: .normal, title: "예시") { action, view, completionHandler in
+            print("example Button Clicked")
+        }
+        return UISwipeActionsConfiguration(actions: [favorite, example])
+    }
 }
+
+
+
