@@ -43,14 +43,28 @@ class SearchImageViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "선택", style: .plain, target: self, action: #selector(selectionRightBarButtonItemClicked))
+        let details = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(detailsRightBarButtonItemClicked))
+        let selection = UIBarButtonItem(title: "선택", style: .plain, target: self, action: #selector(selectionRightBarButtonItemClicked))
+        
+        navigationItem.rightBarButtonItems = [details, selection]
+    }
+    
+    @objc func detailsRightBarButtonItemClicked() {
+        
+        if #available(iOS 14.0, *) {
+            self.showUIMenu()
+            print("iOS14.0~", #function)
+        } else {
+            self.showActionSheet()
+            print("iOS~13.9", #function)
+        }
     }
     
     @objc func selectionRightBarButtonItemClicked() {
         print(#function)
         let vccell = SearchImageCollectionViewCell()
         
-//        NotificationCenter.default.post(name: NSNotification.Name("savedImage"), object: nil, userInfo: ["savedImage": vc.photoImage.image) //타입캐스팅 어떻게?
+        //        NotificationCenter.default.post(name: NSNotification.Name("savedImage"), object: nil, userInfo: ["savedImage": vc.photoImage.image) //타입캐스팅 어떻게?
         NotificationCenter.default.post(name: NSNotification.Name("savedImageURL"), object: nil, userInfo: ["savedImageURL": imageArray[selectedImageIndex!]])
         self.navigationController?.popViewController(animated: true)
     }
@@ -62,6 +76,33 @@ class SearchImageViewController: BaseViewController {
             self.mainView.collectionView.reloadData()
             print(self.imageArray)
         }
+    }
+    
+    func showUIMenu() {
+        let details = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(detailsRightBarButtonItemClicked))
+        
+        let shoot = UIAction(title: "사진 촬영", image: nil, handler: { _ in print("사진 촬영") })
+        let gallery = UIAction(title: "갤러리", image: nil, handler: { _ in print("갤러리") })
+        let cancel = UIAction(title: "취소", image: nil, handler: { _ in print("취소") })
+        
+        details.menu = UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [shoot, gallery, cancel])
+    }
+    
+    func showActionSheet() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let shoot = UIAlertAction(title: "사진 촬영", style: .default) { _ in
+            print("SHOOT CLICKED")
+        }
+        let gallery = UIAlertAction(title: "갤러리", style: .default) { _ in
+            print("GALLERY CLICKED")
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in
+            print("CANCEL CLICKED")
+        }
+        alert.addAction(shoot)
+        alert.addAction(gallery)
+        alert.addAction(cancel)
+        present(alert, animated: true)
     }
 }
 

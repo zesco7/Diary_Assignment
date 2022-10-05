@@ -80,9 +80,9 @@ class HomeViewController: UIViewController {
     @objc func plusButtonClicked() {
         let vc = DiaryViewController()
         //present, overCurrentPresent, overFullScreen은 viewWillAppear에서 실행안됨(view가 사라진걸로 인식하지 않기 때문)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-        //self.navigationController?.pushViewController(vc, animated: true)
+        //vc.modalPresentationStyle = .fullScreen
+        //present(vc, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func fetchRealm() {

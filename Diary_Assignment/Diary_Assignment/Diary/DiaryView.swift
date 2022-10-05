@@ -43,15 +43,9 @@ class DiaryView: BaseView {
         //view.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 30)
         return view
     }()
-    
-    let sampleButton : UIButton = {
-        let view = UIButton()
-        view.backgroundColor = .green
-        return view
-    }()
 
     override func configureUI() {
-        [photoImageView, titleTextField, dateTextField, contentTextView, searchImageButton, sampleButton].forEach {
+        [photoImageView, titleTextField, dateTextField, contentTextView, searchImageButton].forEach {
             self.addSubview($0)
         }
     }
@@ -88,12 +82,6 @@ class DiaryView: BaseView {
         searchImageButton.snp.makeConstraints { make in
             make.trailing.equalTo(photoImageView.snp.trailing).offset(-10)
             make.bottom.equalTo(photoImageView.snp.bottom).offset(-10)
-            make.size.equalTo(50)
-        }
-        
-        sampleButton.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide)
-            make.trailingMargin.equalTo(-20)
             make.size.equalTo(50)
         }
     }
