@@ -23,7 +23,7 @@ class UserDiary: Object {
     //Realm1. 테이블 만들기
     @Persisted var diaryTitle: String //제목(필수)
     @Persisted var diaryContents: String? //내용(옵션)
-    @Persisted var diaryDate = Date() //작성날짜(필수)
+    @Persisted var diaryDate: String //작성날짜(필수)
     @Persisted var regDate = Date() //등록날짜(필수)
     @Persisted var favorite: Bool //즐겨찾기(필수)
     @Persisted var photo: String? //사진URL(옵션)
@@ -32,7 +32,7 @@ class UserDiary: Object {
     @Persisted(primaryKey: true) var objectId: ObjectId
     
     //Realm3. 초기화
-    convenience init(diaryTitle: String, diaryContents: String, diaryDate: Date, regDate: Date, favorite: Bool, photo: String?) {
+    convenience init(diaryTitle: String, diaryContents: String, diaryDate: String, regDate: Date, favorite: Bool, photo: String?) {
         self.init()
         self.diaryTitle = diaryTitle
         self.diaryContents = diaryContents

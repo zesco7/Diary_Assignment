@@ -16,6 +16,11 @@ import RealmSwift //Realm1. 라이브러리 추가
  4. 파일 저장경로 확인
  */
 
+/*질문
+ -.tapDone에서 datePicker 타입을 Date로 어떻게 바꾸는지? 방법몰라 realm테이블 컬럼타입을 string으로 바꿔서 처리함.
+ 
+ */
+
 class DiaryViewController: BaseViewController {
     //let navi = UINavigationController(rootViewController: DiaryViewController())
     let mainView = DiaryView()
@@ -43,6 +48,18 @@ class DiaryViewController: BaseViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelBarButtonClicked))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveBarButtonClicked))
+        
+        self.mainView.dateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDone))
+    }
+    
+    @objc func tapDone() {
+        if let datePicker = self.mainView.dateTextField.inputView as? UIDatePicker {
+            let dateformatter = DateFormatter()
+            dateformatter.dateStyle = .medium
+            dateformatter.dateFormat = "YYYY-MM-dd (EEE)"
+            self.mainView.dateTextField.text = dateformatter.string(from: datePicker.date)
+        }
+        self.mainView.dateTextField.resignFirstResponder()
     }
     
     @objc func cancelBarButtonClicked() {
@@ -50,9 +67,16 @@ class DiaryViewController: BaseViewController {
     }
     
     @objc func saveBarButtonClicked() {
-        //Realm3. 레코드 생성, 추가
+        
+        if mainView.titleTextField.text == "" {
+            let alert = UIAlertController(title: "제목을 입력하세요", message: nil, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "확인", style: .default)
+            alert.addAction(ok)
+            present(alert, animated: true)
+        } else {
+            //Realm3. 레코드 생성, 추가
             //레코드 생성
-            let task = UserDiary(diaryTitle: "오늘의 일기\(Int.random(in: 1...100))", diaryContents: "일기 테스트 내용", diaryDate: Date(), regDate: Date(), favorite: false, photo: nil)
+            let task = UserDiary(diaryTitle: mainView.titleTextField.text!, diaryContents: mainView.contentTextView.text, diaryDate: mainView.dateTextField.text!, regDate: Date(), favorite: false, photo: nil)
             
             //레코드 추가
             try! localRealm.write {
@@ -60,6 +84,7 @@ class DiaryViewController: BaseViewController {
                 print("Realm Success")
                 self.navigationController?.popViewController(animated: true)
             }
+        }
     }
     
     @objc func selectionRightBarButtonItemClickedNotification(notification: NSNotification) {
@@ -72,3 +97,33 @@ class DiaryViewController: BaseViewController {
         }
     }
 }
+
+extension UITextField {
+    func setInputViewDatePicker(target: Any, selector: Selector) {
+            //데이터피커 생성
+            let screenWidth = UIScreen.main.bounds.width
+            let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 216))
+            datePicker.datePickerMode = .date
+            
+            if #available(iOS 14, *) {
+              datePicker.preferredDatePickerStyle = .wheels
+              datePicker.sizeToFit()
+            }
+            self.inputView = datePicker
+            
+            //툴바 생성
+            let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: screenWidth, height: 44.0))
+            let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: #selector(tapCancel))
+            let barButton = UIBarButtonItem(title: "Done", style: .plain, target: target, action: selector)
+            toolBar.setItems([cancel, flexible, barButton], animated: false)
+            self.inputAccessoryView = toolBar
+        }
+        
+        @objc func tapCancel() {
+            self.resignFirstResponder()
+        }
+}
+
+
+

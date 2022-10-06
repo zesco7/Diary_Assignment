@@ -25,6 +25,12 @@ class HomeViewController: UIViewController {
     
     let localRealm = try! Realm() //Realm2. 저장경로 변수 생성
     
+    let searchBar : UISearchBar = {
+        let view = UISearchBar()
+        view.placeholder = "일기내용을 검색하세요"
+        return view
+    }()
+    
     let tableView : UITableView = {
         let view = UITableView()
         view.backgroundColor = .lightGray
@@ -46,18 +52,44 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         //UITableViewCell.self의미: UITableViewCell가 가지고 있는 전체 값을 갖게된다.
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
-            
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
-            let sortButton = UIBarButtonItem(title: "정렬", style: .plain, target: self, action: #selector(sortButtonClicked))
-            let filterButton = UIBarButtonItem(title: "필터", style: .plain, target: self, action: #selector(filterButtonClicked))
-            
-            navigationItem.leftBarButtonItems = [sortButton, filterButton]
+        searchBar.delegate = self
+        
+        configureUI()
+        setConstraints()
+        
+        searchBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.width.equalTo(view)
+            make.height.equalTo(44)
         }
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
+        let sortButton = UIBarButtonItem(title: "정렬", style: .plain, target: self, action: #selector(sortButtonClicked))
+        let filterButton = UIBarButtonItem(title: "필터", style: .plain, target: self, action: #selector(filterButtonClicked))
+        
+        navigationItem.leftBarButtonItems = [sortButton, filterButton]
     }
     
+    func configureUI() {
+        [searchBar, tableView].forEach {
+            view.addSubview($0)
+        }
+    }
+        
+    func setConstraints() {
+        searchBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.width.equalTo(view)
+            make.height.equalTo(44)
+        }
+        
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom)
+            make.width.equalTo(view)
+            make.height.equalTo(view)
+        }
+    }
+
     @objc func sortButtonClicked() {
         tasks = localRealm.objects(UserDiary.self).sorted(byKeyPath: "regDate", ascending: false)
     }
@@ -65,7 +97,7 @@ class HomeViewController: UIViewController {
     @objc func filterButtonClicked() {
         //CONTAINS[c]: 대소문자구분하지 않고 필터 가능
         //Realm문서-CRUD-Filter Data에서 다중조건 처리방법도 확인 가능
-        tasks = localRealm.objects(UserDiary.self).filter("diaryTitle CONTAINS '1'")
+        tasks = localRealm.objects(UserDiary.self).filter("favorite == true")
     }
     
     //네비게이션 컨트롤러의 동작할때 pop을 하면 스택에서 빠져나간 뷰 컨트롤러는 메모리에서 사라지기 때문에 화면전환시 viewDidLoad가 호출되지 않으므로 viewWillAppear에서 reloadData해줘야함
@@ -118,7 +150,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 //self.tasks.setValue(false, forKey: "favorite")
                 
                 //하나의 레코드에서 여러 컬럼 변경(변경하려는 컬럼 전에 구분용으로 pk를 넣어주어야 함)
-                self.localRealm.create(UserDiary.self, value: ["objectId": self.tasks[indexPath.row].objectId, "diaryContent": "변경테스트", "diaryTitle": "제목임"], update: .modified)
+//                self.localRealm.create(UserDiary.self, value: ["objectId": self.tasks[indexPath.row].objectId, "diaryContent": "변경테스트", "diaryTitle": "제목임", update: .modified)
                 
                 print("Realm Update Succeeded")
             }
@@ -131,21 +163,23 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         favorite.image = UIImage(systemName: image) //이미지,배경변경 하려면 프로퍼티접근해서 변경
         favorite.backgroundColor = .systemBlue
         
-        return UISwipeActionsConfiguration(actions: [favorite])
-    }
-    
-    //trailing은 오른쪽부터 표시됨.
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let favorite = UIContextualAction(style: .normal, title: "즐겨찾기") { action, view, completionHandler in
-            print("favorite Button Clicked")
-        }
-
-        let example = UIContextualAction(style: .normal, title: "예시") { action, view, completionHandler in
-            print("example Button Clicked")
-        }
-        return UISwipeActionsConfiguration(actions: [favorite, example])
+        return UISwipeActionsConfiguration(actions: [favorite]) //trailing은 오른쪽부터 표시됨.
     }
 }
 
-
-
+extension HomeViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        tasks = localRealm.objects(UserDiary.self).filter("diaryContents CONTAINS '\(searchBar.text!)'")
+    }
+   
+    //취소버튼 생성
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
+    //취소버튼 클릭액션
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = "" //검색어 삭제
+        tasks = localRealm.objects(UserDiary.self).sorted(byKeyPath: "diaryDate", ascending: true) //화면 갱신(didSet)
+    }
+}

@@ -65,8 +65,15 @@ class SearchImageViewController: BaseViewController {
         let vccell = SearchImageCollectionViewCell()
         
         //        NotificationCenter.default.post(name: NSNotification.Name("savedImage"), object: nil, userInfo: ["savedImage": vc.photoImage.image) //타입캐스팅 어떻게?
-        NotificationCenter.default.post(name: NSNotification.Name("savedImageURL"), object: nil, userInfo: ["savedImageURL": imageArray[selectedImageIndex!]])
-        self.navigationController?.popViewController(animated: true)
+        if let isNotNil = selectedImageIndex {
+            NotificationCenter.default.post(name: NSNotification.Name("savedImageURL"), object: nil, userInfo: ["savedImageURL": imageArray[selectedImageIndex!]])
+                self.navigationController?.popViewController(animated: true)
+        } else {
+            let alert = UIAlertController(title: "선택한 사진이 없습니다", message: nil, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "확인", style: .default)
+            alert.addAction(ok)
+            self.present(alert, animated: true)
+        }
     }
     
     func fetchImage(query: String) {
@@ -122,6 +129,7 @@ extension SearchImageViewController: UICollectionViewDelegate, UICollectionViewD
     
     //셀선택시 박스표시
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(#function)
         if let cell = collectionView.cellForItem(at: indexPath) as? SearchImageCollectionViewCell {
             cell.showSelectionBox()
             self.selectedImageIndex = indexPath.item //프로퍼티에 인덱스 담아 didSelectItemAt외부에서 사용할수있도록 만듦
