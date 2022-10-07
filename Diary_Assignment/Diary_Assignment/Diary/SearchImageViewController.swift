@@ -25,6 +25,7 @@ import PhotosUI
  -.searchBarSearchButtonClicked에서 imageArray.removeAll() 없어도 되지 않나? fetchImage 호출할때 imageArray에 데이터 덮어씌워지니까
  -. selectionRightBarButtonItemClicked에서 사진선택해야만 선택버튼 작동하도록 조건 어떻게?
  -. cellForItemAt에서 설정한 태그를 외부에서 어떻게 접근하는지? selectionRightBarButtonItemClicked에서 imageArray 배열값에 태그를 넣을 때 사용하려고함.
+ -. customImage전달할때 property사용하면 왜 데이터가 안뜨는지?
  */
 class SearchImageViewController: BaseViewController {
     
@@ -239,10 +240,10 @@ extension SearchImageViewController: PHPickerViewControllerDelegate {
         
         if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) { //선택한 asset이 nil이 아니고, 타입이 UIImage일 때 불러오기
             itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                DispatchQueue.main.async {
-                    let vc = DiaryViewController()
-                    vc.mainView.photoImageView.image = image as? UIImage
-                    
+                DispatchQueue.main.async {                    
+
+                    //NotificationCenter사용하여 데이터전달
+                    NotificationCenter.default.post(name: NSNotification.Name("customImage"), object: nil, userInfo: ["customImage": image])
                     picker.dismiss(animated: true)
                     self.navigationController?.popViewController(animated: true)
                     print("저장된 사진 불러오기를 성공했습니다.")

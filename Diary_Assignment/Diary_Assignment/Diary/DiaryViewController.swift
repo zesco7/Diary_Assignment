@@ -42,6 +42,8 @@ class DiaryViewController: BaseViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(selectionRightBarButtonItemClickedNotification(notification:)), name: NSNotification.Name("savedImageURL"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(customGallerySelectionUIMenuClickedNotification(notification:)), name: NSNotification.Name("customImage"), object: nil)
+        
         //Realm4. 파일 저장경로 출력(원래 샌드박스처럼 파일저장경로를 알 수는 없지만 Realm에서 코드 제공)
         print("Realm is located at:", localRealm.configuration.fileURL!)
         
@@ -94,6 +96,12 @@ class DiaryViewController: BaseViewController {
             print(savedImageURL)
             let url = URL(string: savedImageURL)
             self.mainView.photoImageView.kf.setImage(with: url)
+        }
+    }
+    
+    @objc func customGallerySelectionUIMenuClickedNotification(notification: NSNotification) {
+        if let customImage = notification.userInfo?["customImage"] as? UIImage {
+            self.mainView.photoImageView.image = customImage
         }
     }
 }
