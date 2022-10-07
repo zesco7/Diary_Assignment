@@ -8,6 +8,8 @@
 import UIKit
 
 import Kingfisher
+import Photos
+import PhotosUI
 
 /*서치바+컬렉션뷰 순서
  1.뷰컨트롤러에 서치바+컬렉션뷰 있는 메인뷰 로드하기
@@ -26,6 +28,8 @@ import Kingfisher
  */
 class SearchImageViewController: BaseViewController {
     
+    let picker = UIImagePickerController()
+    
     var mainView = SearchImageView()
     var imageArray : [String] = []
     var startPage = 0
@@ -39,25 +43,44 @@ class SearchImageViewController: BaseViewController {
         mainView.collectionView.dataSource = self
         mainView.collectionView.register(SearchImageCollectionViewCell.self, forCellWithReuseIdentifier: "SearchImageCollectionViewCell")
         mainView.searchBar.delegate = self
+        picker.delegate = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let details = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(detailsRightBarButtonItemClicked))
-        let selection = UIBarButtonItem(title: "선택", style: .plain, target: self, action: #selector(selectionRightBarButtonItemClicked))
         
-        navigationItem.rightBarButtonItems = [details, selection]
+        photoOption()
+    }
+    
+    //바버튼 사진옵션 적용(UIMenu, ActionSheet)
+    func photoOption() {
+        var menuItems: [UIAction] {
+            return [
+                UIAction(title: "사진 촬영", image: nil, attributes: .disabled, handler: { _ in print("사진 촬영") }), //PHPicker는 촬영기능 안돼서 disabled처리
+                UIAction(title: "갤러리", image: nil, handler: { _ in
+                    self.openGallery()
+                    print("갤러리") }),
+                UIAction(title: "취소", image: nil, handler: { _ in print("취소") }) //.destructive 등 attributes 추가 가능
+            ]
+        }
+        
+        var customImageMenu: UIMenu {
+            return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: menuItems)
+        }
+        
+        if #available(iOS 14.0, *) {
+            let details = UIBarButtonItem(title: "", image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: customImageMenu)
+            let selection = UIBarButtonItem(title: "선택", style: .plain, target: self, action: #selector(selectionRightBarButtonItemClicked))
+            navigationItem.rightBarButtonItems = [details, selection]
+        } else {
+            let details = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(detailsRightBarButtonItemClicked))
+            let selection = UIBarButtonItem(title: "선택", style: .plain, target: self, action: #selector(selectionRightBarButtonItemClicked))
+            navigationItem.rightBarButtonItems = [details, selection]
+        }
     }
     
     @objc func detailsRightBarButtonItemClicked() {
-        
-        if #available(iOS 14.0, *) {
-            self.showUIMenu()
-            print("iOS14.0~", #function)
-        } else {
-            self.showActionSheet()
-            print("iOS~13.9", #function)
-        }
+        self.showActionSheet()
     }
     
     @objc func selectionRightBarButtonItemClicked() {
@@ -88,11 +111,17 @@ class SearchImageViewController: BaseViewController {
     func showUIMenu() {
         let details = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(detailsRightBarButtonItemClicked))
         
-        let shoot = UIAction(title: "사진 촬영", image: nil, handler: { _ in print("사진 촬영") })
-        let gallery = UIAction(title: "갤러리", image: nil, handler: { _ in print("갤러리") })
-        let cancel = UIAction(title: "취소", image: nil, handler: { _ in print("취소") })
+        var menuItems: [UIAction] {
+            return [
+                UIAction(title: "사진 촬영", image: nil, handler: { _ in print("사진 촬영") }),
+                UIAction(title: "갤러리", image: nil, handler: { _ in print("갤러리") }),
+                UIAction(title: "취소", image: nil, handler: { _ in print("취소") })
+            ]
+        }
         
-        details.menu = UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [shoot, gallery, cancel])
+        var customImageMenu: UIMenu {
+            return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: menuItems)
+        }
     }
     
     func showActionSheet() {
@@ -133,6 +162,7 @@ extension SearchImageViewController: UICollectionViewDelegate, UICollectionViewD
         if let cell = collectionView.cellForItem(at: indexPath) as? SearchImageCollectionViewCell {
             cell.showSelectionBox()
             self.selectedImageIndex = indexPath.item //프로퍼티에 인덱스 담아 didSelectItemAt외부에서 사용할수있도록 만듦
+            //collectionView.reloadData()
         }
     }
     
@@ -140,6 +170,7 @@ extension SearchImageViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? SearchImageCollectionViewCell {
             cell.hideSelectionBox()
+            //collectionView.reloadData()
         }
     }
 }
@@ -177,5 +208,48 @@ extension SearchImageViewController: UISearchBarDelegate {
         mainView.collectionView.reloadData() //데이터 지우고 리로드
         searchBar.text = ""
         searchBar.setShowsCancelButton(false, animated: true)
+    }
+}
+
+extension SearchImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        print(#function)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        print(#function)
+    }
+}
+
+@available(iOS 14.0, *) //iOS 14 이상일 때
+extension SearchImageViewController: PHPickerViewControllerDelegate {
+    func openGallery() {
+        var configuration = PHPickerConfiguration() //PHPicker객체 구현
+        configuration.selectionLimit = 1
+        configuration.filter = .any(of: [.images])
+        
+        let picker = PHPickerViewController(configuration: configuration) //PHPickerViewController에 PHPicker객체넣기
+        picker.delegate = self //PHPickerViewController 프로토콜 연결
+        self.present(picker, animated: true, completion: nil)
+    }
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        
+        let itemProvider = results.first?.itemProvider //itemProvider불러오기(선택한 asset의 대표)
+        
+        if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) { //선택한 asset이 nil이 아니고, 타입이 UIImage일 때 불러오기
+            itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                DispatchQueue.main.async {
+                    let vc = DiaryViewController()
+                    vc.mainView.photoImageView.image = image as? UIImage
+                    
+                    picker.dismiss(animated: true)
+                    self.navigationController?.popViewController(animated: true)
+                    print("저장된 사진 불러오기를 성공했습니다.")
+                }
+            }
+        } else {
+            picker.dismiss(animated: true)
+        }
     }
 }
