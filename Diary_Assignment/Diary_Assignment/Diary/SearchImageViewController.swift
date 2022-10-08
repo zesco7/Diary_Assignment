@@ -27,9 +27,15 @@ import PhotosUI
  -. cellForItemAt에서 설정한 태그를 외부에서 어떻게 접근하는지? selectionRightBarButtonItemClicked에서 imageArray 배열값에 태그를 넣을 때 사용하려고함.
  -. customImage전달할때 property사용하면 왜 데이터가 안뜨는지?
  */
+
+/*포인트
+ -. 서버통신할때 다른 작업 못하도록 isUserInteractionEnabled처리 해두는게 좋음. 서버통신 끝나면 정상작동 가능하도록 할 수 있음. (ex.view.isUserInteractionEnabled = false)
+ */
 class SearchImageViewController: BaseViewController {
     
     let picker = UIImagePickerController()
+    var delegate: SelectImageDelegate? //protocol사용하여 데이터전달1. protocol 변수 선언
+    var selectImage: UIImage? //protocol사용하여 데이터전달2. 전달할 데이터 변수 선언
     
     var mainView = SearchImageView()
     var imageArray : [String] = []
@@ -90,8 +96,11 @@ class SearchImageViewController: BaseViewController {
         
         //        NotificationCenter.default.post(name: NSNotification.Name("savedImage"), object: nil, userInfo: ["savedImage": vc.photoImage.image) //타입캐스팅 어떻게?
         if let isNotNil = selectedImageIndex {
-            NotificationCenter.default.post(name: NSNotification.Name("savedImageURL"), object: nil, userInfo: ["savedImageURL": imageArray[selectedImageIndex!]])
-                self.navigationController?.popViewController(animated: true)
+            delegate?.sendImageData(image: selectImage!) //protocol사용하여 데이터전달4. didSelectItemAt에서 받은 이미지를 인자로 넣어 프로토콜 메서드 호출
+            self.navigationController?.popViewController(animated: true)
+            
+//            NotificationCenter.default.post(name: NSNotification.Name("savedImageURL"), object: nil, userInfo: ["savedImageURL": imageArray[selectedImageIndex!]])
+//                self.navigationController?.popViewController(animated: true)
         } else {
             let alert = UIAlertController(title: "선택한 사진이 없습니다", message: nil, preferredStyle: .alert)
             let ok = UIAlertAction(title: "확인", style: .default)
@@ -154,27 +163,31 @@ extension SearchImageViewController: UICollectionViewDelegate, UICollectionViewD
         let url = URL(string: imageArray[indexPath.item])
         cell.photoImage.kf.setImage(with: url)
         cell.photoImage.tag = indexPath.item
+        cell.layer.borderColor = selectedImageIndex == indexPath.item ? UIColor.yellow.cgColor : nil
+        cell.layer.borderWidth = selectedImageIndex == indexPath.item ? 5 : 0
+        
         return cell
     }
     
     //셀선택시 박스표시
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(#function)
-        if let cell = collectionView.cellForItem(at: indexPath) as? SearchImageCollectionViewCell {
-            cell.showSelectionBox()
-            self.selectedImageIndex = indexPath.item //프로퍼티에 인덱스 담아 didSelectItemAt외부에서 사용할수있도록 만듦
-            //collectionView.reloadData()
+        self.selectedImageIndex = indexPath.item //프로퍼티에 인덱스 담아 didSelectItemAt외부에서 사용할수있도록 만듦(NotificationCenter에서 사용)
+            
+            //protocol사용하여 데이터전달3.cellForItemAt에서 재사용셀에 있는 이미지데이터 가져오기
+            guard let cell = collectionView.cellForItem(at: indexPath) as? SearchImageCollectionViewCell else { return }
+            //cell.showSelectionBox()
+            selectImage = cell.photoImage.image
+            collectionView.reloadData()
         }
-    }
     
     //셀선택시 박스제거
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath) as? SearchImageCollectionViewCell {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? SearchImageCollectionViewCell else { return }
             cell.hideSelectionBox()
             //collectionView.reloadData()
         }
     }
-}
 
 //페이지네이션
 extension SearchImageViewController: UICollectionViewDataSourcePrefetching {

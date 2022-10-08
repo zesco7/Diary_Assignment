@@ -21,6 +21,10 @@ import RealmSwift //Realm1. 라이브러리 추가
  
  */
 
+protocol SelectImageDelegate { //protocol사용하여 데이터전달1. protocol생성
+    func sendImageData(image: UIImage)
+}
+
 class DiaryViewController: BaseViewController {
     //let navi = UINavigationController(rootViewController: DiaryViewController())
     let mainView = DiaryView()
@@ -35,12 +39,13 @@ class DiaryViewController: BaseViewController {
     
     @objc func searchImageButtonClicked() {
         let vc = SearchImageViewController()
+        vc.delegate = self //프로토콜 연결(프로토콜 선언하면 상속받은 타입속성을 지니기 때문에 SearchImageViewController에서 delegate가 SelectImageDelegate타입이어도 괜찮음)
+        
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(selectionRightBarButtonItemClickedNotification(notification:)), name: NSNotification.Name("savedImageURL"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(customGallerySelectionUIMenuClickedNotification(notification:)), name: NSNotification.Name("customImage"), object: nil)
         
@@ -65,9 +70,11 @@ class DiaryViewController: BaseViewController {
     }
     
     @objc func cancelBarButtonClicked() {
+        //dismiss(animated: true)
         self.navigationController?.popViewController(animated: true)
     }
     
+    //realm+이미지 도큐먼트 저장
     @objc func saveBarButtonClicked() {
         
         if mainView.titleTextField.text == "" {
@@ -81,21 +88,21 @@ class DiaryViewController: BaseViewController {
             let task = UserDiary(diaryTitle: mainView.titleTextField.text!, diaryContents: mainView.contentTextView.text, diaryDate: mainView.dateTextField.text!, regDate: Date(), favorite: false, photo: nil)
             
             //레코드 추가
-            try! localRealm.write {
-                localRealm.add(task)
-                print("Realm Success")
-                self.navigationController?.popViewController(animated: true)
+            //저장하려는 레코드 생성+realm에 이미지 저장+document에 이미지 저장
+            do {
+                try localRealm.write {
+                    localRealm.add(task)
+                }
+            } catch let error {
+                print(error)
             }
-        }
-    }
-    
-    @objc func selectionRightBarButtonItemClickedNotification(notification: NSNotification) {
-        if let savedImageURL = notification.userInfo?["savedImageURL"] as? String {
-
-            //self.mainView.photoImageView.image = savedImageURL
-            print(savedImageURL)
-            let url = URL(string: savedImageURL)
-            self.mainView.photoImageView.kf.setImage(with: url)
+            
+            //사진이 있으면 도큐먼트에 이미지 저장
+            if let image = mainView.photoImageView.image {
+                saveImageToDocument(fileName: "\(task.objectId).jpg", image: image) //realm모델에서 self.init()구문 때문에 pk자동생성되어 objectId에 접근할 수 있음.
+                print("Realm Success")
+            }
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -108,30 +115,35 @@ class DiaryViewController: BaseViewController {
 
 extension UITextField {
     func setInputViewDatePicker(target: Any, selector: Selector) {
-            //데이터피커 생성
-            let screenWidth = UIScreen.main.bounds.width
-            let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 216))
-            datePicker.datePickerMode = .date
-            
-            if #available(iOS 14, *) {
-              datePicker.preferredDatePickerStyle = .wheels
-              datePicker.sizeToFit()
-            }
-            self.inputView = datePicker
-            
-            //툴바 생성
-            let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: screenWidth, height: 44.0))
-            let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-            let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: #selector(tapCancel))
-            let barButton = UIBarButtonItem(title: "Done", style: .plain, target: target, action: selector)
-            toolBar.setItems([cancel, flexible, barButton], animated: false)
-            self.inputAccessoryView = toolBar
-        }
+        //데이터피커 생성
+        let screenWidth = UIScreen.main.bounds.width
+        let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 216))
+        datePicker.datePickerMode = .date
         
-        @objc func tapCancel() {
-            self.resignFirstResponder()
+        if #available(iOS 14, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+            datePicker.sizeToFit()
         }
+        self.inputView = datePicker
+        
+        //툴바 생성
+        let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: screenWidth, height: 44.0))
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: #selector(tapCancel))
+        let barButton = UIBarButtonItem(title: "Done", style: .plain, target: target, action: selector)
+        toolBar.setItems([cancel, flexible, barButton], animated: false)
+        self.inputAccessoryView = toolBar
+    }
+    
+    @objc func tapCancel() {
+        self.resignFirstResponder()
+    }
 }
 
-
+extension DiaryViewController: SelectImageDelegate {
+    func sendImageData(image: UIImage) {
+        mainView.photoImageView.image = image
+        print(#function)
+    }
+}
 

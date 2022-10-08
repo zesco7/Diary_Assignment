@@ -25,43 +25,30 @@ class HomeViewController: UIViewController {
     
     let localRealm = try! Realm() //Realm2. 저장경로 변수 생성
     
-    let searchBar : UISearchBar = {
-        let view = UISearchBar()
-        view.placeholder = "일기내용을 검색하세요"
-        return view
-    }()
+    var mainView = HomeView()
     
-    let tableView : UITableView = {
-        let view = UITableView()
-        view.backgroundColor = .lightGray
-        return view
-    }()
+    override func loadView() {
+        self.view = mainView
+        
+        mainView.tableView.delegate = self
+        mainView.tableView.dataSource = self
+        //UITableViewCell.self의미: UITableViewCell가 가지고 있는 전체 값을 갖게된다.
+        mainView.tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "HomeTableViewCell")
+        mainView.searchBar.delegate = self
+        
+    }
     
     //Realm3. 정렬된 Realm데이터 담을 Results타입 배열 생성(원본데이터를 사용하기보다 프로퍼티에 대입해서 사용하는게 좋음)
     var tasks: Results<UserDiary>! {
         didSet { //didSet사용하여 데이터 변경될때마다 reloadData일괄 처리
-            tableView.reloadData()
+            mainView.tableView.reloadData()
             print("Tasks Changed")
         }
     }
     
     override func viewDidLoad() {
         print(#function)
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        //UITableViewCell.self의미: UITableViewCell가 가지고 있는 전체 값을 갖게된다.
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        searchBar.delegate = self
-        
-        configureUI()
-        setConstraints()
-        
-        searchBar.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.width.equalTo(view)
-            make.height.equalTo(44)
-        }
+
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
         let sortButton = UIBarButtonItem(title: "정렬", style: .plain, target: self, action: #selector(sortButtonClicked))
@@ -69,27 +56,7 @@ class HomeViewController: UIViewController {
         
         navigationItem.leftBarButtonItems = [sortButton, filterButton]
     }
-    
-    func configureUI() {
-        [searchBar, tableView].forEach {
-            view.addSubview($0)
-        }
-    }
-        
-    func setConstraints() {
-        searchBar.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.width.equalTo(view)
-            make.height.equalTo(44)
-        }
-        
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(searchBar.snp.bottom)
-            make.width.equalTo(view)
-            make.height.equalTo(view)
-        }
-    }
-
+ 
     @objc func sortButtonClicked() {
         tasks = localRealm.objects(UserDiary.self).sorted(byKeyPath: "regDate", ascending: false)
     }
@@ -115,6 +82,7 @@ class HomeViewController: UIViewController {
         //vc.modalPresentationStyle = .fullScreen
         //present(vc, animated: true)
         self.navigationController?.pushViewController(vc, animated: true)
+        //transitionViewController2(vc, transitionStyle: .presentFullNavigation) //화면전환 메서드 사용
     }
     
     func fetchRealm() {
@@ -129,9 +97,19 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        cell.textLabel?.text = tasks[indexPath.row].diaryTitle
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as? HomeTableViewCell else { return UITableViewCell() }
+        cell.diaryImage.image = loadImageFromDocument(fileName: "\(tasks[indexPath.row].objectId).jpg") //도큐먼트에 저장된 다이어리사진 화면 표시
+        cell.diaryTitle.text = tasks[indexPath.row].diaryTitle
+        cell.diaryDate.text = tasks[indexPath.row].diaryDate
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DiaryViewController() //데이터 저장된 곳으로 화면이동
+        present(vc, animated: true)
+        //self.navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     //반환값 작성형식 모를때는 우선 반환값 적어보자
@@ -158,12 +136,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             print(self.tasks[indexPath.row].favorite)
         }
         
-        
         let image = tasks[indexPath.row].favorite ? "star.fill" : "star"
         favorite.image = UIImage(systemName: image) //이미지,배경변경 하려면 프로퍼티접근해서 변경
         favorite.backgroundColor = .systemBlue
         
         return UISwipeActionsConfiguration(actions: [favorite]) //trailing은 오른쪽부터 표시됨.
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
 }
 
