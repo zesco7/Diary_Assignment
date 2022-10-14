@@ -39,4 +39,22 @@ extension UIViewController {
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
+    
+    func showAlertWithClosure(alertTitle: String, alertMessage: String, completionHandler: @escaping () -> Void) {
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default) { ok in
+            completionHandler()
+        }
+        alert.addAction(ok)
+        present(alert, animated: true)
+    }
+    
+    func changeRootView() {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate =  windowScene?.delegate as? SceneDelegate
+        let vc = HomeViewController()
+        let navi = UINavigationController(rootViewController: vc)
+        sceneDelegate?.window?.rootViewController = navi
+        sceneDelegate?.window?.makeKeyAndVisible()
+    }
 }

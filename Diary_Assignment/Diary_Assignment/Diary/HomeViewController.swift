@@ -22,7 +22,6 @@ import RealmSwift //Realm1. 라이브러리 추가
  -. 커스텀셀이 아니면 따로 스위프트 파일 만들지 않고 tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")처럼 클래스파일이랑 identifier를 설정할수있는건지? 만약 셀파일에 객체만들려고하면 그때는 스위프트파일 생성해야하는지?
  */
 class HomeViewController: UIViewController {
-    
     let localRealm = try! Realm() //Realm2. 저장경로 변수 생성
     
     var mainView = HomeView()
@@ -77,7 +76,7 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchRealm()
-        
+        mainView.tableView.reloadData()
         print(#function) //구현이 안됐을땐 콘솔에서 코드가 실행되는지 안되는지 먼저 꼭 살피자.
         //tableView.reloadData() //Realm5. 데이터갱신하여 화면표시
     }
@@ -94,6 +93,7 @@ class HomeViewController: UIViewController {
     func fetchRealm() {
         //Realm4. Realm데이터 정렬하여 tasks에 담기
         tasks = localRealm.objects(UserDiary.self).sorted(byKeyPath: "diaryDate", ascending: true)
+        //print(tasks)
     }
 }
 
