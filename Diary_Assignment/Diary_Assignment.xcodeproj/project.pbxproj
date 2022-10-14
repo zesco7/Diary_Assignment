@@ -21,6 +21,7 @@
 		98658B5428F17C4600F31817 /* BackupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98658B5328F17C4600F31817 /* BackupViewController.swift */; };
 		98658B5628F17C7000F31817 /* BackupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98658B5528F17C7000F31817 /* BackupTableViewCell.swift */; };
 		98658B5828F17C8000F31817 /* BackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98658B5728F17C8000F31817 /* BackupView.swift */; };
+		9874F27228F80FED0070938B /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = 9874F27128F80FED0070938B /* Zip */; };
 		988D25AE28E2F7AB004046E6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988D25AD28E2F7AB004046E6 /* UIViewController+Extension.swift */; };
 		988D25B028E300A5004046E6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988D25AF28E300A5004046E6 /* ProfileViewController.swift */; };
 		988FD62B28E15510008760A7 /* CodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988FD62A28E15510008760A7 /* CodeViewController.swift */; };
@@ -139,6 +140,7 @@
 				98FF1EF228E031CA00E5A7C9 /* SeSAC_UIFramework.framework in Frameworks */,
 				984A3F1528E5AB660072FA8A /* SwiftyJSON in Frameworks */,
 				988FD62E28E17BDB008760A7 /* SnapKit in Frameworks */,
+				9874F27228F80FED0070938B /* Zip in Frameworks */,
 				984A3F1828E5AB7C0072FA8A /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,6 +323,7 @@
 				984A3F1728E5AB7C0072FA8A /* Kingfisher */,
 				989680BC28E85337007F16D7 /* Realm */,
 				989680BE28E85337007F16D7 /* RealmSwift */,
+				9874F27128F80FED0070938B /* Zip */,
 			);
 			productName = Diary_Assignment;
 			productReference = 98CC9CB128DF44A3007B91FF /* Diary_Assignment.app */;
@@ -356,6 +359,7 @@
 				984A3F1328E5AB660072FA8A /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				984A3F1628E5AB7C0072FA8A /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				989680BB28E85337007F16D7 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				9874F27028F80FED0070938B /* XCRemoteSwiftPackageReference "Zip" */,
 			);
 			productRefGroup = 98CC9CB228DF44A3007B91FF /* Products */;
 			projectDirPath = "";
@@ -684,6 +688,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		9874F27028F80FED0070938B /* XCRemoteSwiftPackageReference "Zip" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Zip.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		988FD62C28E17BDB008760A7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -717,6 +729,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 984A3F1628E5AB7C0072FA8A /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		9874F27128F80FED0070938B /* Zip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9874F27028F80FED0070938B /* XCRemoteSwiftPackageReference "Zip" */;
+			productName = Zip;
 		};
 		988FD62D28E17BDB008760A7 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

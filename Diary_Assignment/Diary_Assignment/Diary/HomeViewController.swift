@@ -48,13 +48,14 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         print(#function)
-
+        fetchDocumentZipFile()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
         let sortButton = UIBarButtonItem(title: "정렬", style: .plain, target: self, action: #selector(sortButtonClicked))
         let filterButton = UIBarButtonItem(title: "필터", style: .plain, target: self, action: #selector(filterButtonClicked))
+        let backupButton = UIBarButtonItem(title: "백업", style: .plain, target: self, action: #selector(backupButtonClicked))
         
-        navigationItem.leftBarButtonItems = [sortButton, filterButton]
+        navigationItem.leftBarButtonItems = [sortButton, filterButton, backupButton]
     }
  
     @objc func sortButtonClicked() {
@@ -65,6 +66,11 @@ class HomeViewController: UIViewController {
         //CONTAINS[c]: 대소문자구분하지 않고 필터 가능
         //Realm문서-CRUD-Filter Data에서 다중조건 처리방법도 확인 가능
         tasks = localRealm.objects(UserDiary.self).filter("favorite == true")
+    }
+    
+    @objc func backupButtonClicked() {
+        let vc = BackupViewController()
+        present(vc, animated: true)
     }
     
     //네비게이션 컨트롤러의 동작할때 pop을 하면 스택에서 빠져나간 뷰 컨트롤러는 메모리에서 사라지기 때문에 화면전환시 viewDidLoad가 호출되지 않으므로 viewWillAppear에서 reloadData해줘야함
@@ -123,7 +129,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             try! self.localRealm.write {
                 //하나의 레코드에서 특정컬럼 하나만 변경
                 self.tasks[indexPath.row].favorite = !self.tasks[indexPath.row].favorite
-                
                 //하나의 레코드에서 컬럼 전체 변경
                 //self.tasks.setValue(false, forKey: "favorite")
                 

@@ -9,6 +9,12 @@
 import UIKit
 
 extension UIViewController {
+    //도큐먼트 경로 반환하는 메서드
+    func documentDirectoryPath() -> URL? {
+        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil } //실행중인 앱의 document 경로를 documentDirectory에 대입
+        return documentDirectory
+    }
+    
     //도큐먼트 이미지 불러오는 메서드
     func loadImageFromDocument(fileName: String) -> UIImage? {
         guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil } //실행중인 앱의 document 경로를 documentDirectory에 대입
@@ -47,6 +53,27 @@ extension UIViewController {
             try data.write(to: fileURL) //압축한 이미지데이터를 fileURL에 저장
         } catch let error {
             print("file save error", error)
+        }
+    }
+    
+    func fetchDocumentZipFile() {
+        do {
+            guard let path = documentDirectoryPath() else { return }
+            
+            //도큐먼트 경로에 대한 파일 목록 생성
+            let docs = try FileManager.default.contentsOfDirectory(at: path, includingPropertiesForKeys: nil)
+            print("docs: \(docs)")
+            
+            //압축파일목록만 보여주기 위해 확장자 zip을 필터
+            let zip = docs.filter { $0.pathExtension == "zip" }
+            print("zip: \(zip)")
+            
+            //필터링한 zip파일의 마지막부분만 추출하여 배열화(ex. ~~~/abc.zip ->abc.zip만 추출)
+            let result = zip.map { $0.lastPathComponent }
+            print("result")
+            
+        } catch {
+            print("Error")
         }
     }
 }
