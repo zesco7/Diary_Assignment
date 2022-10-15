@@ -182,7 +182,7 @@ extension HomeViewController: UISearchBarDelegate {
 extension HomeViewController: FSCalendarDelegate, FSCalendarDataSource {
     //.(점)으로 이벤트 갯수 표시
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        return repository.fetchDate(date: date).count
+        return repository.fetchDate(date: date).count //realm레코드가 추가되면서 데이터갯수가 바뀌므로 캘린더 컬렉션뷰도 화면갱신해줘야함.
     }
     
     //달력 날짜 대신 문자 입력
