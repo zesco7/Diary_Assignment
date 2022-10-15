@@ -85,7 +85,16 @@ class DiaryViewController: BaseViewController {
         } else {
             //Realm3. 레코드 생성, 추가
             //레코드 생성
-            let task = UserDiary(diaryTitle: mainView.titleTextField.text!, diaryContents: mainView.contentTextView.text, diaryDate: mainView.dateTextField.text!, regDate: Date(), favorite: false, photo: nil)
+            let selectedDate = mainView.dateTextField.text!
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "YYYY-MM-dd (EEE)" //변경할 string타입과 형식 맞추기
+            dateFormatter.timeZone = TimeZone(abbreviation: "GMT+00:00") //TimeZone,abbreviation 추가
+            let date = dateFormatter.date(from: selectedDate)!
+            
+            print(type(of: date))
+            print(date)
+            
+            let task = UserDiary(diaryTitle: mainView.titleTextField.text!, diaryContents: mainView.contentTextView.text, diaryDate: date, regDate: Date(), favorite: false, photo: nil)
             
             //레코드 추가
             //저장하려는 레코드 생성+realm에 이미지 저장+document에 이미지 저장
@@ -102,6 +111,7 @@ class DiaryViewController: BaseViewController {
                 saveImageToDocument(fileName: "\(task.objectId).jpg", image: image) //realm모델에서 self.init()구문 때문에 pk자동생성되어 objectId에 접근할 수 있음.
                 print("Realm Success")
             }
+            
             self.navigationController?.popViewController(animated: true)
         }
     }
@@ -115,7 +125,7 @@ class DiaryViewController: BaseViewController {
 
 extension UITextField {
     func setInputViewDatePicker(target: Any, selector: Selector) {
-        //데이터피커 생성
+        //데이트피커 생성
         let screenWidth = UIScreen.main.bounds.width
         let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 216))
         datePicker.datePickerMode = .date

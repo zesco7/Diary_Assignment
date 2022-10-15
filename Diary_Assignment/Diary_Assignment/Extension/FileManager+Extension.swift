@@ -28,17 +28,6 @@ extension UIViewController {
         }
     }
     
-    //도큐먼트 이미지파일삭제 메서드
-    func removeImageFromDocument(fileName: String){
-        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return } //실행중인 앱의 document 경로를 documentDirectory에 대입
-        let fileURL = documentDirectory.appendingPathComponent(fileName) //document안에 저장된 fileName의 경로(이미지 저장 경로)
-        
-        do {
-            try FileManager.default.removeItem(at: fileURL)
-        } catch let error {
-            print(error)
-        }
-    }
     
     func saveImageToDocument(fileName: String, image: UIImage) {
         //FileManager: 파일관리 메서드

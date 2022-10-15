@@ -8,10 +8,18 @@
 import UIKit
 import SwiftUI
 
+import FSCalendar
+
 class HomeView: BaseView {
     let searchBar : UISearchBar = {
         let view = UISearchBar()
         view.placeholder = "일기내용을 검색하세요"
+        return view
+    }()
+    
+    lazy var calendar: FSCalendar = {
+        let view = FSCalendar()
+        view.backgroundColor = .white
         return view
     }()
     
@@ -21,15 +29,21 @@ class HomeView: BaseView {
         return view
     }()
     
+    let dateFormatter : DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyMMdd"
+       return dateFormatter
+    }()
+    
     override func configureUI() {
-        [searchBar, tableView].forEach {
+        [searchBar, tableView, calendar].forEach {
             self.addSubview($0)
         }
     }
     
     override func setConstraints() {
         searchBar.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide)
+            make.top.equalTo(calendar.snp.bottom)
             make.width.equalTo(self)
             make.height.equalTo(44)
         }
@@ -38,6 +52,11 @@ class HomeView: BaseView {
             make.top.equalTo(searchBar.snp.bottom)
             make.width.equalTo(self)
             make.height.equalTo(self)
+        }
+        
+        calendar.snp.makeConstraints { make in
+            make.leading.top.trailing.equalTo(self.safeAreaLayoutGuide)
+            make.height.equalTo(300)
         }
     }
 }
