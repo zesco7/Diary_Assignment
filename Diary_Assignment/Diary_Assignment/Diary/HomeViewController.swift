@@ -84,7 +84,7 @@ final class HomeViewController: BaseViewController {
     //네비게이션 컨트롤러의 동작할때 pop을 하면 스택에서 빠져나간 뷰 컨트롤러는 메모리에서 사라지기 때문에 화면전환시 viewDidLoad가 호출되지 않으므로 viewWillAppear에서 reloadData해줘야함
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(tasks)
+        mainView.calendar.reloadData() //캘린더도 컬렉션뷰이므로 데이터변경 후 화면갱신 해줘야함
         mainView.tableView.reloadData()
         print(#function) //구현이 안됐을땐 콘솔에서 코드가 실행되는지 안되는지 먼저 꼭 살피자.
     }
@@ -201,11 +201,9 @@ extension HomeViewController: FSCalendarDelegate, FSCalendarDataSource {
         return mainView.dateFormatter.string(from: date) == "220907" ? "오프라인모임" : nil
     }
     
-    
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         //repository에서 realm테이블 필터링해서 선택한 날짜에 맞는 일기내용만 표시
         tasks = repository.fetchDate(date: date)
-        mainView.tableView.reloadData()
     }
     
 }
